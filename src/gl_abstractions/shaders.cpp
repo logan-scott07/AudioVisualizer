@@ -16,8 +16,8 @@ std::string get_shader_source(std::string const& shader_file) {
     return buffer.str();
 }
 
-bool compile_shader(std::string const& shader_data, GLenum shader_type) {
-    GLuint shader_id = glCreateShader(shader_type);
+bool compile_shader(GLuint& shader_id, std::string const& shader_data, GLenum shader_type) {
+    shader_id = glCreateShader(shader_type);
     if (shader_id == 0) {
         std::cout << "Failed to create shader " << shader_data << "\n";
         return false;
