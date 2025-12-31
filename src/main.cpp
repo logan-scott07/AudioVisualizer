@@ -1,28 +1,13 @@
-#include <filesystem>
 #include <iostream>
 #include <glad/gl.h>
 #include <GLFW/glfw3.h>
 #include "shaders.h"
+#include "window.h"
 
 int main() {
-    glfwInit();
 
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    GLFWwindow* window = create_window(800, 800, "AudioVisualizer");
 
-    GLFWwindow* window = glfwCreateWindow(800, 800, "Visualizer", nullptr, nullptr);
-
-    if (!window) {
-        glfwTerminate();
-        return -1;
-    }
-
-    glfwMakeContextCurrent(window);
-
-    gladLoadGL(glfwGetProcAddress);
-
-    glViewport(0, 0, 800, 800);
 
     std::string vertex_source = get_shader_source("../../src/gl_abstractions/include/default.vert");
 
