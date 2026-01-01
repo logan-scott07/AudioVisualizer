@@ -6,4 +6,4 @@
 bool compile_shader(GLuint& shader_id, std::string const& shader_data, GLenum shader_type);
 std::string get_shader_source(std::string const& shader_file);
 
-#endif //AUDIOVISUALIZER_SHADERS_H
+#endif
