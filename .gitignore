@@ -1,0 +1,34 @@
+# Build directories
+cmake-build-*/
+build/
+out/
+
+# CMake generated files
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+CTestTestfile.cmake
+Testing/
+
+# Conan
+conan/
+conan.lock
+CMakeUserPresets.json
+
+# JetBrains / CLion
+.idea/
+
+# Compiled objects/binaries
+*.o
+*.obj
+*.exe
+*.a
+*.lib
+*.so
+*.dll
+*.pdb
+*.ilk
+
+# OS junk
+.DS_Store
+Thumbs.db
