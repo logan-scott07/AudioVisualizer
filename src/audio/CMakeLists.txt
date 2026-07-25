@@ -2,8 +2,8 @@ find_package(miniaudio REQUIRED)
 
 add_library(audio
         AudioCapture.cpp
-        include/SongSelect.h
         SongSelect.cpp
+        FFT.cpp
 )
 
 target_include_directories(audio PUBLIC
@@ -13,6 +13,7 @@ target_include_directories(audio PUBLIC
 target_link_libraries(audio
         PRIVATE
         miniaudio::miniaudio
+        kissfft::kissfft
 )
 
 target_compile_definitions(audio PRIVATE UNICODE _UNICODE)

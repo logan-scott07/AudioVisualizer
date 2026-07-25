@@ -10,7 +10,7 @@ bool SongSelect::Open() {
     ofn.hwndOwner = NULL;
     ofn.lpstrFile = FILEBUFFER;
     ofn.nMaxFile = sizeof(FILEBUFFER);
-    ofn.lpstrFilter = L"All\0*.*\0mp3\0*.mp3\0\0";
+    ofn.lpstrFilter = L"All\0*.*\0Mp3\0*.mp3\0\0";
     ofn.nFilterIndex = 1;
     ofn.lpstrFileTitle = NULL;
     ofn.nMaxFileTitle = 0;

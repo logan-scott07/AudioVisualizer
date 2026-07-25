@@ -3,15 +3,15 @@
 #include <memory>
 // OpenGL / Window Rendering
 #include "Shaders.h"
-#include "Mesh.h"
 #include "Window.h"
+#include "Mesh.h"
 #include "ShaderLink.h"
 #include "GenVert.h"
 #include "GenIndices.h"
 // Audio
 #include "AudioCapture.h"
 #include "SongSelect.h"
-
+#include "FFT.h"
 
 int main() {
 
@@ -44,15 +44,22 @@ int main() {
     ShaderLink shader_link(vertexShader, fragmentShader);
 
     std::vector<float> vertices = generateVertices();
-
     std::vector<unsigned int> indices = generateIndices();
-
     Mesh barMesh(vertices, indices);
+
+    FFT fft(BUFFER_SIZE, NUM_BARS, SAMPLE_RATE);
 
     //render loop
     while (!glfwWindowShouldClose(window)) {
         glClearColor(0.24f, 0.24f, 0.24f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
+
+        if (player) {
+            std::vector<float> samples = player->getSamples();
+            std::vector<float> barHeights = fft.process(samples);
+            updateBarHeights(vertices, barHeights);
+            barMesh.updateVertices(vertices);
+        }
 
         shader_link.use();
         barMesh.draw();
@@ -63,7 +70,6 @@ int main() {
 
     //clean-up
     glfwDestroyWindow(window);
-
     glfwTerminate();
 
     return 0;

@@ -26,7 +26,7 @@ private:
 
     std::vector<float> ringBuffer;
     std::mutex bufferMutex;
-    float volume = 0.8f;
+    float volume = 0.1f;
 };
 
 #endif
