@@ -1,10 +1,7 @@
-#ifndef AUDIOVISUALIZER_AUDIO_CAPTURE_H
-#define AUDIOVISUALIZER_AUDIO_CAPTURE_H
-
+#pragma once
 #include <vector>
 #include <mutex>
 #include <string>
-
 #include <miniaudio.h>
 
 constexpr int SAMPLE_RATE = 44100;
@@ -28,5 +25,3 @@ private:
     std::mutex bufferMutex;
     float volume = 0.1f;
 };
-
-#endif

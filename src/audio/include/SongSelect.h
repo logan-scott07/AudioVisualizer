@@ -1,7 +1,5 @@
-#ifndef AUDIOVISUALIZER_SONG_SELECT_H
-#define AUDIOVISUALIZER_SONG_SELECT_H
+#pragma once
 #include <string>
-#include <windows.h>
 
 class SongSelect {
     public:
@@ -13,7 +11,3 @@ private:
     wchar_t FILEBUFFER[260];
     std::wstring FILEPATH;
 };
-
-
-
-#endif //AUDIOVISUALIZER_SONG_SELECT_H

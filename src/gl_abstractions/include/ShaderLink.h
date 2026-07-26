@@ -1,5 +1,4 @@
-#ifndef SHADER_LINK_H
-#define SHADER_LINK_H
+#pragma once
 #include <glad/glad.h>
 
 class ShaderLink {
@@ -13,5 +12,3 @@ class ShaderLink {
     private:
         GLuint id;
 };
-
-#endif

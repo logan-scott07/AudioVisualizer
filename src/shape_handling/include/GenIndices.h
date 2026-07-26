@@ -1,8 +1,4 @@
-#ifndef AUDIOVISUALIZER_GEN_INDICES_H
-#define AUDIOVISUALIZER_GEN_INDICES_H
+#pragma once
 #include <vector>
 
 std::vector<unsigned int> generateIndices();
-
-
-#endif //AUDIOVISUALIZER_GEN_INDICES_H

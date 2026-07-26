@@ -1,5 +1,4 @@
-#ifndef AUDIOVISUALIZER_FFT_H
-#define AUDIOVISUALIZER_FFT_H
+#pragma once
 #include "kiss_fft.h"
 #include <vector>
 
@@ -29,5 +28,3 @@ private:
     void computeHannWindow();
     void computeLogBuckets();
 };
-
-#endif

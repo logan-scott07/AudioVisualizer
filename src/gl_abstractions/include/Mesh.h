@@ -1,5 +1,4 @@
-#ifndef AUDIOVISUALIZER_MESH_H
-#define AUDIOVISUALIZER_MESH_H
+#pragma once
 #include <glad/glad.h>
 #include <vector>
 
@@ -16,5 +15,3 @@ private:
     GLuint VAO, VBO, EBO;
     GLuint indexCount;
 };
-
-#endif
