@@ -6,6 +6,9 @@ bool SongSelect::Open() {
     OPENFILENAME ofn;
     ZeroMemory(&ofn, sizeof(ofn));
 
+    ZeroMemory(&FILEBUFFER, sizeof(FILEBUFFER));
+    FILEBUFFER[0] = L'\0';
+
     ofn.lStructSize = sizeof(ofn);
     ofn.hwndOwner = NULL;
     ofn.lpstrFile = FILEBUFFER;
