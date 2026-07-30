@@ -15,6 +15,10 @@ public:
 
     std::vector<float> getSamples();
 
+    void Pause();
+    void Resume();
+    bool IsPlaying() const;
+
 private:
     static void data_callback(ma_device* device, void* output, const void* input, ma_uint32 frameCount);
 
@@ -24,4 +28,6 @@ private:
     std::vector<float> ringBuffer;
     std::mutex bufferMutex;
     float volume = 0.1f;
+
+    bool playing = true;
 };

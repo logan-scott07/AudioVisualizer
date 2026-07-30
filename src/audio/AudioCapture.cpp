@@ -53,3 +53,22 @@ std::vector<float> AUDIO_PLAYER::getSamples() {
         return std::vector<float>(BUFFER_SIZE, 0.0f);
     return std::vector<float>(ringBuffer.end() - BUFFER_SIZE, ringBuffer.end());
 }
+
+void AUDIO_PLAYER::Pause() {
+    if (playing) {
+        ma_device_stop(&device);
+        playing = false;
+    }
+
+}
+
+void AUDIO_PLAYER::Resume() {
+    if (!playing) {
+        ma_device_start(&device);
+        playing = true;
+    }
+}
+
+bool AUDIO_PLAYER::IsPlaying() const {
+    return playing;
+}
