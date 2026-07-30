@@ -4,6 +4,8 @@ find_package(glad REQUIRED)
 add_library(window
         window.cpp
         window.h
+        TitleBar.cpp
+        TitleBar.h
 )
 
 target_include_directories(window PUBLIC
