@@ -1,8 +1,16 @@
-//
-// Created by Logan on 7/26/2026.
-//
+#pragma once
+#include <memory>
+#include "Mesh.h"
 
-#ifndef AUDIOVISUALIZER_BUTTON_H
-#define AUDIOVISUALIZER_BUTTON_H
+class Button {
+public:
 
-#endif //AUDIOVISUALIZER_BUTTON_H
+    Button(float xMin, float yMin, float xMax, float yMax);
+
+    bool Contains(float ndcX, float ndcY) const;
+    void Draw() const;
+
+private:
+    float xMin, yMin, xMax, yMax;
+    std::unique_ptr<Mesh> mesh;
+};
