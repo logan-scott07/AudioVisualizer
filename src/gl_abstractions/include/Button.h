@@ -1,0 +1,8 @@
+//
+// Created by Logan on 7/26/2026.
+//
+
+#ifndef AUDIOVISUALIZER_BUTTON_H
+#define AUDIOVISUALIZER_BUTTON_H
+
+#endif //AUDIOVISUALIZER_BUTTON_H
