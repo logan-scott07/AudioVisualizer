@@ -26,7 +26,7 @@ int main() {
         return -1;
     }
 
-    TitleBar titleBar(window);
+    TitleBar titleBar(window, 0.0f, 0.95f, 1.0f, 1.0f);
 
     titleBar.Initialize();
 
@@ -67,6 +67,7 @@ int main() {
     Mesh barMesh(vertices, indices);
 
     Button playPauseButton(0.80f, 0.80f, 0.95f, 0.95f);
+
     bool leftMouseWasDown = false;
 
     FFT fft(BUFFER_SIZE, NUM_BARS, SAMPLE_RATE);
@@ -103,12 +104,12 @@ int main() {
             vector<float> samples = player->getSamples();
             vector<float> barHeights = fft.process(samples);
             updateBarHeights(vertices, barHeights);
-            barMesh.updateVertices(vertices);
+            barMesh.UpdateVertices(vertices);
         }
 
         shader_link.use();
-        barMesh.draw();
-
+        titleBar.Draw();
+        barMesh.Draw();
         playPauseButton.Draw();
 
         window.SwapBuffers();

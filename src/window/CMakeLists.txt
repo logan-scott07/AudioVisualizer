@@ -16,4 +16,5 @@ target_link_libraries(window
         PRIVATE
         glfw
         glad::glad
+        gl_abstractions
 )

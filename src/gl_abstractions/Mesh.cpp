@@ -31,13 +31,13 @@ Mesh::~Mesh()
     glDeleteBuffers(1, &EBO);
 }
 
-void Mesh::draw() const
+void Mesh::Draw() const
 {
     glBindVertexArray(VAO);
     glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, 0);
 }
 
-void Mesh::updateVertices(const std::vector<float>& vertices)
+void Mesh::UpdateVertices(const std::vector<float>& vertices)
 {
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     // glBufferSubData overwrites existing GPU memory in place - much cheaper

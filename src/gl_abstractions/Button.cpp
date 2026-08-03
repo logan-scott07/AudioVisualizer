@@ -20,5 +20,5 @@ bool Button::Contains(float ndcX, float ndcY) const {
 }
 
 void Button::Draw() const {
-    mesh->draw();
+    mesh->Draw();
 }
