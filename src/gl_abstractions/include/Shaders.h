@@ -2,7 +2,5 @@
 #include <glad/glad.h>
 #include <string>
 
-
-bool compile_shader(GLuint& shader_id, std::string const& shader_data, GLenum shader_type);
-
-std::string get_shader_source(std::string const& shader_file);
+GLuint compile_shader(const std::string& shader_data, GLenum shaderType);
+std::string get_shader_source(std::string const& shaderFile);

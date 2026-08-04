@@ -1,39 +1,37 @@
 #include <Shaders.h>
 #include <glad/glad.h>
 #include <string>
-#include <fstream> //for std::fstream
-#include <sstream>  //for std::stringstream
-#include <iostream> //for std::string
+#include <fstream>
+#include <sstream>
+#include <iostream>
+using namespace std;
 
-
-std::string get_shader_source(std::string const& shader_file) {
-    std::ifstream file(shader_file);
+string get_shader_source(string const& shaderFile) {
+    ifstream file(shaderFile);
     if (!file.is_open()) {
-        std::cout << "Failed to open " << shader_file << "\n";
+        cout << "Failed to open " << shaderFile << "\n";
     }
-    std::stringstream buffer;
+    stringstream buffer;
     buffer << file.rdbuf();
     return buffer.str();
 }
 
-bool compile_shader(GLuint& shader_id, std::string const& shader_data, GLenum shader_type) {
-    shader_id = glCreateShader(shader_type);
+GLuint compile_shader(string const& shader_data, GLenum shaderType) {
+    GLuint shader_id = glCreateShader(shaderType);
     if (shader_id == 0) {
-        std::cout << "Failed to create shader " << shader_data << "\n";
-        return false;
+        throw runtime_error("Failed to create shader");
     }
 
     const GLchar* source = shader_data.c_str();
     glShaderSource(shader_id, 1, &source, nullptr);
-
     glCompileShader(shader_id);
 
     GLint success = 0;
     glGetShaderiv(shader_id, GL_COMPILE_STATUS, &success);
 
     if (success != GL_TRUE) {
-        std::cout << "Failed to compile shader " << shader_data << "\n";
-        return false;
+        glDeleteShader(shader_id);
+        throw runtime_error("Failed to compile shader");
     }
-    return true;
+    return shader_id;
 }
