@@ -8,10 +8,10 @@ constexpr int SAMPLE_RATE = 44100;
 constexpr int CHANNELS = 2;
 constexpr int BUFFER_SIZE = 4096;
 
-class AUDIO_PLAYER {
+class AudioPlayer {
 public:
-    explicit AUDIO_PLAYER(const std::string & filepath);
-    ~AUDIO_PLAYER();
+    explicit AudioPlayer(const std::string & filepath);
+    ~AudioPlayer();
 
     std::vector<float> getSamples();
 

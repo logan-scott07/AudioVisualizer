@@ -2,7 +2,7 @@
 #include "include/AudioCapture.h"
 #include <stdexcept>
 
-AUDIO_PLAYER::AUDIO_PLAYER(const std::string &filepath) {
+AudioPlayer::AudioPlayer(const std::string &filepath) {
     ma_decoder_config decoderConfig = ma_decoder_config_init(ma_format_f32, CHANNELS, SAMPLE_RATE);
 
     if (ma_decoder_init_file(filepath.c_str(), &decoderConfig, &decoder) != MA_SUCCESS)
@@ -22,14 +22,14 @@ AUDIO_PLAYER::AUDIO_PLAYER(const std::string &filepath) {
         throw std::runtime_error("Failed to start audio device");
 }
 
-AUDIO_PLAYER::~AUDIO_PLAYER() {
+AudioPlayer::~AudioPlayer() {
     ma_device_stop(&device);
     ma_device_uninit(&device);
     ma_decoder_uninit(&decoder);
 }
 
-void AUDIO_PLAYER::data_callback(ma_device* device, void* output, const void* input, ma_uint32 frameCount) {
-    auto* self = static_cast<AUDIO_PLAYER*>(device->pUserData);
+void AudioPlayer::data_callback(ma_device* device, void* output, const void* input, ma_uint32 frameCount) {
+    auto* self = static_cast<AudioPlayer*>(device->pUserData);
 
     float* out = static_cast<float*>(output);
     ma_decoder_read_pcm_frames(&self->decoder, out, frameCount, nullptr);
@@ -47,14 +47,14 @@ void AUDIO_PLAYER::data_callback(ma_device* device, void* output, const void* in
         out[i] *= self->volume;
 }
 
-std::vector<float> AUDIO_PLAYER::getSamples() {
+std::vector<float> AudioPlayer::getSamples() {
     std::lock_guard<std::mutex> lock(bufferMutex);
     if (ringBuffer.size() < BUFFER_SIZE)
         return std::vector<float>(BUFFER_SIZE, 0.0f);
     return std::vector<float>(ringBuffer.end() - BUFFER_SIZE, ringBuffer.end());
 }
 
-void AUDIO_PLAYER::Pause() {
+void AudioPlayer::Pause() {
     if (playing) {
         ma_device_stop(&device);
         playing = false;
@@ -62,13 +62,13 @@ void AUDIO_PLAYER::Pause() {
 
 }
 
-void AUDIO_PLAYER::Resume() {
+void AudioPlayer::Resume() {
     if (!playing) {
         ma_device_start(&device);
         playing = true;
     }
 }
 
-bool AUDIO_PLAYER::IsPlaying() const {
+bool AudioPlayer::IsPlaying() const {
     return playing;
 }
