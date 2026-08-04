@@ -2,10 +2,8 @@ find_package(glfw3 REQUIRED)
 find_package(glad REQUIRED)
 
 add_library(window
-        window.cpp
-        window.h
+        Window.cpp
         TitleBar.cpp
-        TitleBar.h
 )
 
 target_include_directories(window PUBLIC
@@ -17,4 +15,5 @@ target_link_libraries(window
         glfw
         glad::glad
         gl_abstractions
+        shape_handling
 )

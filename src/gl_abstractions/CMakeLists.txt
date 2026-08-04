@@ -1,9 +1,9 @@
 find_package(glad REQUIRED)
+
 add_library(gl_abstractions
-        shaders.cpp
-        mesh.cpp
+        Shaders.cpp
+        Mesh.cpp
         ShaderLink.cpp
-        include/Button.h
         Button.cpp
 )
 target_include_directories(gl_abstractions PUBLIC
@@ -15,4 +15,5 @@ target_compile_definitions(gl_abstractions PUBLIC
 target_link_libraries(gl_abstractions
         PRIVATE
         glad::glad
+        shape_handling
 )
