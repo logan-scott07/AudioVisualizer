@@ -3,11 +3,12 @@
 
 class SongSelect {
     public:
-    bool Open();
+    std::string Open();
 
+    private:
     std::string GetFilePath();
 
 private:
-    wchar_t FILEBUFFER[260];
-    std::wstring FILEPATH;
+    wchar_t fileBuffer[260] = {};
+    std::wstring filePath;
 };

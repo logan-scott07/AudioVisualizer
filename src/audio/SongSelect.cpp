@@ -1,40 +1,42 @@
 #include "include/SongSelect.h"
-#include <windows.h>
 
-bool SongSelect::Open() {
+#include <stdexcept>
+#include <windows.h>
+using namespace std;
+
+string SongSelect::Open() {
 
     OPENFILENAME ofn;
     ZeroMemory(&ofn, sizeof(ofn));
 
-    ZeroMemory(&FILEBUFFER, sizeof(FILEBUFFER));
-    FILEBUFFER[0] = L'\0';
+    ZeroMemory(&fileBuffer, sizeof(fileBuffer));
+    fileBuffer[0] = L'\0';
 
     ofn.lStructSize = sizeof(ofn);
-    ofn.hwndOwner = NULL;
-    ofn.lpstrFile = FILEBUFFER;
-    ofn.nMaxFile = sizeof(FILEBUFFER);
+    ofn.hwndOwner = nullptr;
+    ofn.lpstrFile = fileBuffer;
+    ofn.nMaxFile = sizeof(fileBuffer);
     ofn.lpstrFilter = L"All\0*.*\0Mp3\0*.mp3\0\0";
     ofn.nFilterIndex = 1;
-    ofn.lpstrFileTitle = NULL;
+    ofn.lpstrFileTitle = nullptr;
     ofn.nMaxFileTitle = 0;
-    ofn.lpstrInitialDir = NULL;
+    ofn.lpstrInitialDir = nullptr;
     ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST | OFN_EXPLORER | OFN_NOCHANGEDIR;
 
-    if (GetOpenFileName(&ofn) == TRUE) {
-        FILEPATH = std::wstring(FILEBUFFER);
-        return true;
-    } else {
-        return false;
+    if (GetOpenFileName(&ofn) != TRUE) {
+        throw runtime_error("File selection cancelled or failed");
     }
+    filePath = wstring(fileBuffer);
+    return GetFilePath();
 }
 
-std::string SongSelect::GetFilePath()
+string SongSelect::GetFilePath()
 {
-    if (FILEPATH.empty()) return {};
+    if (filePath.empty()) return {};
 
-    int sizeNeeded = WideCharToMultiByte(CP_UTF8, 0, FILEPATH.c_str(), (int)FILEPATH.size(), NULL, 0, NULL, NULL);
-    std::string result(sizeNeeded, 0);
-    WideCharToMultiByte(CP_UTF8, 0, FILEPATH.c_str(), (int)FILEPATH.size(), &result[0], sizeNeeded, NULL, NULL);
+    int sizeNeeded = WideCharToMultiByte(CP_UTF8, 0, filePath.c_str(), (int)filePath.size(), nullptr, 0, nullptr, nullptr);
+    string result(sizeNeeded, 0);
+    WideCharToMultiByte(CP_UTF8, 0, filePath.c_str(), (int)filePath.size(), &result[0], sizeNeeded, nullptr, nullptr);
     return result;
 }
 
