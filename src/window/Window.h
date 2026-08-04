@@ -8,9 +8,9 @@ class Window {
     bool Create(int width, int height, const char *title);
         void Destroy();
 
-        void SwapBuffers();
-        void PollEvents();
-        bool ShouldClose();
+        void SwapBuffers() const;
+        void PollEvents() const;
+        bool ShouldClose() const;
 
         GLFWwindow* GetGLFWWindow() const;
         HWND GetHWND() const;

@@ -43,15 +43,15 @@ void Window::Destroy() {
     glfwTerminate();
 }
 
-void Window::SwapBuffers() {
+void Window::SwapBuffers() const {
     glfwSwapBuffers(window);
 }
 
-void Window::PollEvents() {
+void Window::PollEvents() const {
     glfwPollEvents();
 }
 
-bool Window::ShouldClose() {
+bool Window::ShouldClose() const {
     return glfwWindowShouldClose(window);
 }
 
