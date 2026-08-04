@@ -22,12 +22,12 @@ void FFT::computeHannWindow() {
 }
 
 void FFT::computeLogBuckets() {
-    int numBins = fftSize / 2;
-    float minFreq = 20.0f;
-    float maxFreq = static_cast<float>(sampleRate) / 2.0f;
+    const int numBins = fftSize / 2;
+    const float minFreq = 20.0f;
+    const float maxFreq = static_cast<float>(sampleRate) / 2.0f;
 
-    float logMin = std::log10(minFreq);
-    float logMax = std::log10(maxFreq);
+    const float logMin = std::log10(minFreq);
+    const float logMax = std::log10(maxFreq);
 
     bucketBounds.resize(numBars + 1);
 
@@ -55,7 +55,7 @@ std::vector<float> FFT::process(const std::vector<float>& stereoSamples) {
     std::vector<kiss_fft_cpx> out(fftSize);
 
     // Downmix stereo -> mono and apply the Hann window
-    int frameCount = std::min(fftSize, static_cast<int>(stereoSamples.size() / 2));
+    const int frameCount = std::min(fftSize, static_cast<int>(stereoSamples.size() / 2));
     for (int i = 0; i < frameCount; ++i)
     {
         float left = stereoSamples[i * 2];

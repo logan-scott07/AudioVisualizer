@@ -18,7 +18,7 @@ Mesh::Mesh(const std::vector<float> &vertices, const std::vector<unsigned int> &
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), indices.data(), GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)nullptr);
     glEnableVertexAttribArray(0);
 
     glBindVertexArray(0);
@@ -34,13 +34,11 @@ Mesh::~Mesh()
 void Mesh::Draw() const
 {
     glBindVertexArray(VAO);
-    glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, 0);
+    glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, nullptr);
 }
 
-void Mesh::UpdateVertices(const std::vector<float>& vertices)
+void Mesh::UpdateVertices(const std::vector<float>& vertices) const
 {
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    // glBufferSubData overwrites existing GPU memory in place - much cheaper
-    // than glBufferData, which would reallocate the buffer every frame
     glBufferSubData(GL_ARRAY_BUFFER, 0, vertices.size() * sizeof(float), vertices.data());
 }

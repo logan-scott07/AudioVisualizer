@@ -9,7 +9,7 @@ public:
     ~Mesh();
 
     void Draw() const;
-    void UpdateVertices(const std::vector<float>& vertices);
+    void UpdateVertices(const std::vector<float>& vertices) const;
 
 private:
     GLuint VAO, VBO, EBO;
