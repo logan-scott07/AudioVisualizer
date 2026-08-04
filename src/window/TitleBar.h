@@ -2,21 +2,21 @@
 #include "Window.h"
 #include <memory>
 #include "Mesh.h"
+#include "ShaderLink.h"
+#include "GenQuad.h"
 #include <Windows.h>
-#include "Shaders.h"
 
 class TitleBar {
 public:
-    explicit TitleBar(Window& window,
-        float xMin, float yMin,
-        float xMax, float yMax);
+    explicit TitleBar(Window& window, ShaderLink& shader, Cords cords, Color color);
 
     void Initialize();
     void Draw() const;
 private:
     Window& window;
+    ShaderLink& shader;
     HWND hwnd = nullptr;
-    float xMin, yMin, xMax, yMax;
+    Cords cords;
+    Color color;
     std::unique_ptr<Mesh> mesh;
-    std::unique_ptr<Shaders> shader;
 };

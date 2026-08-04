@@ -1,16 +1,20 @@
 #pragma once
 #include <memory>
 #include "Mesh.h"
+#include "GenQuad.h"
+#include "ShaderLink.h"
 
 class Button {
 public:
 
-    Button(float xMin, float yMin, float xMax, float yMax);
+    Button(ShaderLink& shader, Cords cords, Color color);
 
     bool Contains(float ndcX, float ndcY) const;
     void Draw() const;
 
 private:
-    float xMin, yMin, xMax, yMax;
+    ShaderLink& shader;
+    Cords cords;
+    Color color;
     std::unique_ptr<Mesh> mesh;
 };
