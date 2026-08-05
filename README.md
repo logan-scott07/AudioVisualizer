@@ -1,49 +1,95 @@
 # AudioVisualizer
 
-A lightweight C++ audio visualization project using modern OpenGL.
+AudioVisualizer is a real-time audio visualization application written in modern C++. The project uses OpenGL for rendering, performs FFT-based audio analysis, and is being developed as a modular graphics application with reusable rendering and UI components.
 
 ## Overview
 
-Project renders real-time audio visualizations using C++, OpenGL, and supporting libraries.  
-The goal is to create a simple foundation for experimenting with graphics, audio processing, and shader-based visual effects.
+The project captures live audio, performs frequency analysis using Fast Fourier Transform (FFT), and renders the results with a modern OpenGL pipeline. Development has expanded beyond a basic visualizer to include reusable graphics abstractions, texture support, and a foundation for interactive UI elements.
 
-## Tools and Technologies
+## Technologies
 
-- C++20  
-- CMake  
-- OpenGL (graphics)
-- GLAD (OpenGL function loading)  
-- Conan (dependency management)  
-- MiniAudio (audio capture)
+- C++20
+- CMake
+- OpenGL 3.3
+- GLFW
+- GLAD
+- MiniAudio
+- KissFFT
+- stb_image
 
 ## Project Structure
 
-AudioVisualizer/  
-├── src/<br>
-│   ├── audio/<br>
-│   ├── gl_abstractions/<br>
-│   ├── shape_handling/<br>
-│   ├── window/<br>
-│   └── main.cpp<br>
-│── CMakeLists.txt<br> 
-└── README.md  
+```
+AudioVisualizer/
+├── src/
+│   ├── audio/
+│   │   ├── AudioCapture
+│   │   ├── FFT
+│   │   └── SongSelect
+│   │
+│   ├── gl_abstractions/
+│   │   ├── ShaderLink
+│   │   ├── Mesh
+│   │   ├── Texture
+│   │   └── Button
+│   │
+│   ├── shape_handling/
+│   │   ├── GenQuad
+│   │   ├── GenVert
+│   │   └── GenIndices
+│   │
+│   ├── window/
+│   │   ├── Window
+│   │   └── TitleBar
+│   │
+│   └── Main.cpp
+│
+├── resources/
+├── CMakeLists.txt
+└── README.md
+```
 
-## Features (Planned / Implemented)
+## Current Features
 
-- [x] Basic window creation  
-- [x] OpenGL context setup  
-- [x] Audio input capture  
-- [ ] FFT processing  
-- [x] Simple bar visualization  
-- [ ] Shader-based effects  
+- Real-time audio capture
+- FFT-based frequency analysis
+- OpenGL rendering pipeline
+- Dynamic audio bar visualization
+- Modular shader management
+- Mesh abstraction layer
+- Texture loading using stb_image
+- Interactive button framework
+- Custom window and title bar classes
+- Modular project architecture
 
-## Tutorials and Resources Used
+## Current Status
 
-- LearnOpenGL (Joey de Vries) [https://learnopengl.com/book/book_pdf.pdf](https://learnopengl.com/book/book_pdf.pdf)
-- Project Setup [https://www.youtube.com/@codingwithmat](https://www.youtube.com/@codingwithmat)
-- MiniAudio documentation [https://miniaud.io/docs/manual/index.html](https://miniaud.io/docs/manual/index.html)
-- GLFW documentation  
-- CMake and Conan documentation  
-- Shader examples from various graphics resources  
+The project is currently focused on expanding the rendering framework while improving the user interface and overall architecture. Recent work has centered around separating rendering logic into reusable components, adding texture support, and building a foundation for interactive UI elements.
 
+## Planned Improvements
 
+- UI polish and interaction improvements
+- Configurable application settings
+- Additional shader effects
+- Performance optimization
+
+## Building
+
+```bash
+mkdir build
+cd build
+cmake ..
+cmake --build .
+```
+
+## Goals
+
+This project serves as an opportunity to deepen experience in:
+
+- Modern C++
+- Graphics programming
+- OpenGL
+- Digital signal processing
+- Software architecture
+- Real-time rendering
+- Interactive application development
