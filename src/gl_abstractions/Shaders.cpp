@@ -4,22 +4,21 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
-using namespace std;
 
-string get_shader_source(string const& shaderFile) {
-    ifstream file(shaderFile);
+std::string get_shader_source(std::string const& shaderFile) {
+    std::ifstream file(shaderFile);
     if (!file.is_open()) {
-        cout << "Failed to open " << shaderFile << "\n";
+        std::cout << "Failed to open " << shaderFile << "\n";
     }
-    stringstream buffer;
+    std::stringstream buffer;
     buffer << file.rdbuf();
     return buffer.str();
 }
 
-GLuint compile_shader(string const& shader_data, GLenum shaderType) {
+GLuint compile_shader(std::string const& shader_data, GLenum shaderType) {
     GLuint shader_id = glCreateShader(shaderType);
     if (shader_id == 0) {
-        throw runtime_error("Failed to create shader");
+        throw std::runtime_error("Failed to create shader");
     }
 
     const GLchar* source = shader_data.c_str();
@@ -31,7 +30,7 @@ GLuint compile_shader(string const& shader_data, GLenum shaderType) {
 
     if (success != GL_TRUE) {
         glDeleteShader(shader_id);
-        throw runtime_error("Failed to compile shader");
+        throw std::runtime_error("Failed to compile shader");
     }
     return shader_id;
 }
