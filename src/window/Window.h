@@ -4,17 +4,17 @@
 #include <Windows.h>
 
 class Window {
-    public:
+public:
     bool Create(int width, int height, const char *title);
-        void Destroy();
+    void Destroy() const;
 
-        void SwapBuffers() const;
-        void PollEvents() const;
-        bool ShouldClose() const;
+    void SwapBuffers() const;
+    void PollEvents() const;
+    bool ShouldClose() const;
 
-        GLFWwindow* GetGLFWWindow() const;
-        HWND GetHWND() const;
+    GLFWwindow* GetGLFWWindow() const;
+    HWND GetHWND() const;
 
-    private:
-        GLFWwindow* window = nullptr;
+private:
+    GLFWwindow* window = nullptr;
 };
