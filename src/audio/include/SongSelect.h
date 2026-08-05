@@ -2,10 +2,10 @@
 #include <string>
 
 class SongSelect {
-    public:
+public:
     std::string Open();
 
-    private:
+private:
     std::string GetFilePath();
 
 private:
