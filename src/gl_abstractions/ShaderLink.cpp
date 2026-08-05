@@ -54,3 +54,10 @@ ShaderLink ShaderLink::Default() {
         std::string(SHADER_DIR) + "/default.frag"
     );
 }
+
+ShaderLink ShaderLink::Texture() {
+    return FromFiles(
+        std::string(SHADER_DIR) + "/texture.vert",
+        std::string(SHADER_DIR) + "/texture.frag"
+    );
+}

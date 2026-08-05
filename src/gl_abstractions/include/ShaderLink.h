@@ -24,6 +24,7 @@ public:
 
     static ShaderLink FromFiles(const std::string& vertexPath, const std::string& fragmentPath);
     static ShaderLink Default();
+    static ShaderLink Texture();
 
     void use() const;
 
