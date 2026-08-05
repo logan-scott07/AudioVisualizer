@@ -2,6 +2,7 @@
 # To keep your changes, remove these comment lines, but the plugin won't be able to modify your requirements
 
 requirements:
+  - "stb/cci.20240531"
   - "miniaudio/0.11.22"
   - "opengl/system"
   - "glad/0.1.36"
