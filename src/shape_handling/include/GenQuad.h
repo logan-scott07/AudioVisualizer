@@ -10,3 +10,4 @@ struct QuadMesh {
 };
 
 QuadMesh generateQuad(float xMin, float yMin, float xMax, float yMax);
+QuadMesh generateTextureQuad(float xMin, float yMin, float xMax, float yMax);

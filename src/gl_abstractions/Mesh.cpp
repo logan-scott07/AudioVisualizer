@@ -1,7 +1,7 @@
 #include <glad/glad.h>
 #include "Mesh.h"
 
-Mesh::Mesh(const std::vector<float> &vertices, const std::vector<unsigned int> &indices)
+Mesh::Mesh(const std::vector<float> &vertices, const std::vector<unsigned int> &indices, bool hasUV)
 {
     indexCount = indices.size();
 
@@ -12,14 +12,20 @@ Mesh::Mesh(const std::vector<float> &vertices, const std::vector<unsigned int> &
     glBindVertexArray(VAO);
 
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    // GL_DYNAMIC_DRAW: hints to the driver this buffer will be updated frequently
     glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(float), vertices.data(), GL_DYNAMIC_DRAW);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), indices.data(), GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)nullptr);
+    GLsizei stride = (hasUV ? 5 : 3) * sizeof(float);
+
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, stride, (void*)nullptr);
     glEnableVertexAttribArray(0);
+
+    if (hasUV) {
+        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, stride, (void*)(3 * sizeof(float)));
+        glEnableVertexAttribArray(1);
+    }
 
     glBindVertexArray(0);
 }
