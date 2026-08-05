@@ -24,6 +24,7 @@ int main() {
     if (!window.Create(1200, 600, "AudioVisualizer")) {
         return -1;
     }
+
     SongSelect song;
     unique_ptr<AudioPlayer> player;
     optional<ShaderLink> shader;
@@ -36,10 +37,10 @@ int main() {
         return -1;
     }
 
-
     TitleBar titleBar(window, (shader.value()),
         Cords{ -1.0f, 0.90f, 1.0f, 1.0f },
-        Color{ .r = 0.15f, .g = 0.15f, .b = 0.2f, .a = 1.0f });
+        Color{ .r = 0.15f, .g = 0.15f, .b = 0.2f, .a = 1.0f },
+        player.get());
 
     titleBar.Initialize();
 
@@ -47,10 +48,6 @@ int main() {
     vector<unsigned int> indices = generateIndices();
 
     Mesh barMesh(vertices, indices);
-
-    Button playPauseButton(shader.value(),
-        Cords{ 0.80f, 0.80f, 0.95f, 0.95f },
-        Color{ .r = 1.0f, .g = 1.0f, .b = 1.0f, .a = 1.0f });
 
     bool leftMouseWasDown = false;
 
@@ -61,29 +58,6 @@ int main() {
         glClearColor(0.24f, 0.24f, 0.24f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        int leftMouseState = glfwGetMouseButton(window.GetGLFWWindow(), GLFW_MOUSE_BUTTON_LEFT);
-        bool leftMouseIsDown = (leftMouseState == GLFW_PRESS);
-
-        if (leftMouseIsDown && !leftMouseWasDown && player) {
-            double mouseX, mouseY;
-            glfwGetCursorPos(window.GetGLFWWindow(), &mouseX, &mouseY);
-
-            int width, height;
-            glfwGetFramebufferSize(window.GetGLFWWindow(), &width, &height);
-
-            float ndcX = static_cast<float>(mouseX) / width * 2.0f - 1.0f;
-            float ndcY = 1.0f - static_cast<float>(mouseY) / height * 2.0f;
-
-            if (playPauseButton.Contains(ndcX, ndcY)) {
-                if (player->IsPlaying())
-                    player->Pause();
-                else
-                    player->Resume();
-            }
-
-        }
-        leftMouseWasDown = leftMouseIsDown;
-
         if (player) {
             vector<float> samples = player->getSamples();
             vector<float> barHeights = fft.process(samples);
@@ -93,11 +67,25 @@ int main() {
 
         shader->use();
         titleBar.Draw();
+        shader->use();
         barMesh.Draw();
-        playPauseButton.Draw();
 
         window.SwapBuffers();
         window.PollEvents();
+
+        GLFWwindow* glfwWindow = window.GetGLFWWindow();
+        int fbWidth, fbHeight;
+        glfwGetWindowSize(glfwWindow, &fbWidth, &fbHeight);
+        double mouseX, mouseY;
+        glfwGetCursorPos(glfwWindow, &mouseX, &mouseY);
+        bool leftMouseIsDown = glfwGetMouseButton(glfwWindow, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS;
+
+        if (leftMouseIsDown && !leftMouseWasDown && fbWidth > 0 && fbHeight > 0) {
+            float ndcX = static_cast<float>(mouseX) / static_cast<float>(fbWidth) * 2.0f - 1.0f;
+            float ndcY = 1.0f - static_cast<float>(mouseY) / static_cast<float>(fbHeight) * 2.0f;
+            titleBar.HandleClick(ndcX, ndcY);
+        }
+        leftMouseWasDown = leftMouseIsDown;
     }
 
     //clean-up
