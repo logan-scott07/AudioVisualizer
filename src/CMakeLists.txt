@@ -17,4 +17,11 @@ target_link_libraries(AudioVisualizer
         opengl::opengl
         glad::glad
         miniaudio::miniaudio
-        kissfft::kissfft)
+        kissfft::kissfft
+        stb::stb)
+
+add_custom_command(TARGET AudioVisualizer POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_SOURCE_DIR}/assets
+        $<TARGET_FILE_DIR:AudioVisualizer>/assets
+)
