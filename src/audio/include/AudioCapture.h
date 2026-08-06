@@ -19,12 +19,13 @@ public:
     void Resume();
     bool IsPlaying() const;
 
+    void ChangeSong(const std::string& filepath);
 private:
     static void data_callback(ma_device* device, void* output, const void* input, ma_uint32 frameCount);
 
+    ma_decoder_config decoderConfig;
     ma_decoder decoder;
     ma_device device;
-
     std::vector<float> ringBuffer;
     std::mutex bufferMutex;
     float volume = 0.1f;

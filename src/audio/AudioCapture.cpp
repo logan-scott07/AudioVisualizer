@@ -1,9 +1,11 @@
 #define MINIAUDIO_IMPLEMENTATION
 #include "include/AudioCapture.h"
+
+#include <iostream>
 #include <stdexcept>
 
 AudioPlayer::AudioPlayer(const std::string &filepath) {
-    ma_decoder_config decoderConfig = ma_decoder_config_init(ma_format_f32, CHANNELS, SAMPLE_RATE);
+    decoderConfig = ma_decoder_config_init(ma_format_f32, CHANNELS, SAMPLE_RATE);
 
     if (ma_decoder_init_file(filepath.c_str(), &decoderConfig, &decoder) != MA_SUCCESS)
         throw std::runtime_error("Failed to open audio file: " + filepath);
@@ -71,4 +73,18 @@ void AudioPlayer::Resume() {
 
 bool AudioPlayer::IsPlaying() const {
     return playing;
+}
+
+void AudioPlayer::ChangeSong(const std::string& filepath) {
+    std::lock_guard<std::mutex> lock(bufferMutex);
+    ma_decoder_uninit(&decoder);
+
+    ma_result result = ma_decoder_init_file(filepath.c_str(), &decoderConfig, &decoder);
+    if (result != MA_SUCCESS) {
+        throw std::runtime_error("Failed to open audio file: " + filepath);
+    }
+
+    ringBuffer.clear();
+    this->playing = true;
+    ma_device_start(&device);
 }
