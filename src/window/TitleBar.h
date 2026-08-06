@@ -6,6 +6,7 @@
 #include "GenQuad.h"
 #include <Windows.h>
 #include "Button.h"
+#include "SongSelect.h"
 
 class AudioPlayer;
 
@@ -19,6 +20,7 @@ private:
     Window& window;
     ShaderLink& shader;
     ShaderLink textureShader;
+    SongSelect song;
     HWND hwnd = nullptr;
     Cords cords;
     Color color;

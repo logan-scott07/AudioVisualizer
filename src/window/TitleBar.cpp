@@ -1,5 +1,9 @@
 #include "TitleBar.h"
+
+#include <iostream>
+
 #include "AudioCapture.h"
+#include "SongSelect.h"
 
 TitleBar::TitleBar(Window& window, ShaderLink& shader, Cords cords, Color color, AudioPlayer* player)
     : window(window), shader(shader), textureShader(ShaderLink::Texture()), cords(cords), color(color)
@@ -35,7 +39,16 @@ TitleBar::TitleBar(Window& window, ShaderLink& shader, Cords cords, Color color,
     buttons.emplace_back(
         Cords{0.80f, 0.91f, 0.84f, 0.99f},
         Texture("assets/icons/FileSelect.png"),
-        []() {}
+        [player, this]() {
+            player->Pause();
+            try {
+                std::string filepath = song.Open();
+                player->ChangeSong(filepath);
+                player->Resume();
+            } catch (std::exception& e) {
+                player->Resume();
+            }
+        }
     );
 
 }
