@@ -88,7 +88,6 @@ int main() {
         leftMouseWasDown = leftMouseIsDown;
     }
 
-    //clean-up
     window.Destroy();
 
     return 0;
