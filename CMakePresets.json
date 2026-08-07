@@ -1,0 +1,32 @@
+{
+  "version": 6,
+  "cmakeMinimumRequired": { "major": 3, "minor": 23, "patch": 0 },
+  "configurePresets": [
+    {
+      "name": "conan-debug",
+      "displayName": "Conan Debug (Ninja)",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/cmake-build-debug",
+      "toolchainFile": "${sourceDir}/conan/build/Debug/generators/conan_toolchain.cmake",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_POLICY_DEFAULT_CMP0091": "NEW"
+      }
+    },
+    {
+      "name": "conan-release",
+      "displayName": "Conan Release (Ninja)",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/cmake-build-release",
+      "toolchainFile": "${sourceDir}/conan/build/Release/generators/conan_toolchain.cmake",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_POLICY_DEFAULT_CMP0091": "NEW"
+      }
+    }
+  ],
+  "buildPresets": [
+    { "name": "conan-debug", "configurePreset": "conan-debug" },
+    { "name": "conan-release", "configurePreset": "conan-release" }
+  ]
+}
