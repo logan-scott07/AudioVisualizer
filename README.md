@@ -8,6 +8,8 @@ The project captures live audio, performs frequency analysis using Fast Fourier 
 
 https://github.com/user-attachments/assets/c3ce08ab-dc3c-46b8-a825-7954e1313b5d
 
+<video src="C:\Users\Logan\Downloads\ProjectExample.mp4" width="420" height="340" controls></video>
+
 ## Technologies
 
 - C++20
@@ -24,34 +26,57 @@ https://github.com/user-attachments/assets/c3ce08ab-dc3c-46b8-a825-7954e1313b5d
 
 ```
 AudioVisualizer/
-├── src/
-│   ├── audio/
-│   │   ├── AudioCapture
-│   │   ├── FFT
-│   │   └── SongSelect
-│   │
-│   ├── gl_abstractions/
-│   │   ├── ShaderLink
-│   │   ├── Mesh
-│   │   ├── Texture
-│   │   └── Button
-│   │
-│   ├── shape_handling/
-│   │   ├── GenQuad
-│   │   ├── GenVert
-│   │   └── GenIndices
-│   │
-│   ├── window/
-│   │   ├── Window
-│   │   └── TitleBar
-│   │
-│   └── Main.cpp
-│
-├── resources/
-├── CMakePresets.json
-├── conanfile.py
 ├── CMakeLists.txt
-└── README.md
+├── CMakePresets.json
+├── conandata.yml
+├── conanfile.py
+├── README.md
+├── assets/
+│   └── icons/
+│       ├── CloseIcon.png
+│       ├── FileSelect.png
+│       ├── PauseIcon.png
+│       ├── PlayIcon.png
+│       └── TitleText.png
+└── src/
+    ├── Main.cpp
+    ├── audio/
+    │   ├── AudioCapture.cpp
+    │   ├── FFT.cpp
+    │   ├── SongSelect.cpp
+    │   └── include/
+    │       ├── AudioCapture.h
+    │       ├── FFT.h
+    │       └── SongSelect.h
+    ├── gl_abstractions/
+    │   ├── Mesh.cpp
+    │   ├── ShaderLink.cpp
+    │   ├── Shaders.cpp
+    │   ├── StbImage.cpp
+    │   └── include/
+    │       ├── Button.h
+    │       ├── Mesh.h
+    │       ├── ShaderLink.h
+    │       ├── Shaders.h
+    │       ├── Texture.h
+    │       ├── default.frag
+    │       ├── default.vert
+    │       ├── texture.frag
+    │       └── texture.vert
+    ├── shape_handling/
+    │   ├── GenIndices.cpp
+    │   ├── GenQuad.cpp
+    │   ├── GenVert.cpp
+    │   └── include/
+    │       ├── GenIndices.h
+    │       ├── GenQuad.h
+    │       └── GenVert.h
+    └── window/
+        ├── TitleBar.cpp
+        ├── Window.cpp
+        └── include/
+            ├── TitleBar.h
+            └── Window.h
 ```
 
 ## Current Features

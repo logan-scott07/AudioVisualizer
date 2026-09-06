@@ -40,7 +40,6 @@ target_include_directories(AudioVisualizer PRIVATE
 )
 
 target_compile_definitions(AudioVisualizer PRIVATE UNICODE _UNICODE)
-target_compile_definitions(AudioVisualizer PRIVATE SHADER_DIR="${CMAKE_SOURCE_DIR}/src/gl_abstractions/include")
 
 add_custom_command(TARGET AudioVisualizer POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory

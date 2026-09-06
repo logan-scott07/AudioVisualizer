@@ -1,7 +1,5 @@
 #define MINIAUDIO_IMPLEMENTATION
-#include "include/AudioCapture.h"
-
-#include <iostream>
+#include "AudioCapture.h"
 #include <stdexcept>
 
 AudioPlayer::AudioPlayer(const std::string &filepath) {
@@ -33,7 +31,7 @@ AudioPlayer::~AudioPlayer() {
 void AudioPlayer::data_callback(ma_device* device, void* output, const void* input, ma_uint32 frameCount) {
     auto* self = static_cast<AudioPlayer*>(device->pUserData);
 
-    float* out = static_cast<float*>(output);
+    auto* out = static_cast<float*>(output);
     ma_decoder_read_pcm_frames(&self->decoder, out, frameCount, nullptr);
 
     {

@@ -16,7 +16,6 @@
 #include "SongSelect.h"
 #include "FFT.h"
 
-using namespace std;
 
 int main() {
     Window window;
@@ -26,14 +25,14 @@ int main() {
     }
 
     SongSelect song;
-    unique_ptr<AudioPlayer> player;
-    optional<ShaderLink> shader;
+    std::unique_ptr<AudioPlayer> player;
+    std::optional<ShaderLink> shader;
 
     try {
         player = make_unique<AudioPlayer>(song.Open());
         shader.emplace(ShaderLink::Default());
-    } catch (exception &e) {
-        wcout << e.what() << endl;
+    } catch (std::exception &e) {
+        std::wcout << e.what() << std::endl;
         return -1;
     }
 
@@ -44,8 +43,8 @@ int main() {
 
     titleBar.Initialize();
 
-    vector<float> vertices = generateVertices();
-    vector<unsigned int> indices = generateIndices();
+    std::vector<float> vertices = generateVertices();
+    std::vector<unsigned int> indices = generateIndices();
 
     Mesh barMesh(vertices, indices);
 
@@ -59,8 +58,8 @@ int main() {
         glClear(GL_COLOR_BUFFER_BIT);
 
         if (player) {
-            vector<float> samples = player->getSamples();
-            vector<float> barHeights = fft.process(samples);
+            std::vector<float> samples = player->getSamples();
+            std::vector<float> barHeights = fft.process(samples);
             updateBarHeights(vertices, barHeights);
             barMesh.UpdateVertices(vertices);
         }

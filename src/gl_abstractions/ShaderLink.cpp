@@ -50,14 +50,14 @@ ShaderLink ShaderLink::FromFiles(const std::string &vertexPath, const std::strin
 
 ShaderLink ShaderLink::Default() {
     return FromFiles(
-        std::string(SHADER_DIR) + "/default.vert",
-        std::string(SHADER_DIR) + "/default.frag"
+        "assets/shaders/default.vert",
+        "assets/shaders/default.frag"
     );
 }
 
 ShaderLink ShaderLink::Texture() {
     return FromFiles(
-        std::string(SHADER_DIR) + "/texture.vert",
-        std::string(SHADER_DIR) + "/texture.frag"
+        "assets/shaders/texture.vert",
+        "assets/shaders/texture.frag"
     );
 }
