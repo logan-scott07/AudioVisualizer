@@ -25,7 +25,8 @@ void FFT::computeHannWindow() {
 void FFT::computeLogBuckets() {
     const int numBins = fftSize / 2;
     const float minFreq = 20.0f;
-    const float maxFreq = static_cast<float>(sampleRate) / 2.0f;
+    const float nyquist = static_cast<float>(sampleRate) * 0.5f;
+    const float maxFreq = (std::min)(16000.0f, nyquist);
 
     const float logMin = std::log10(minFreq);
     const float logMax = std::log10(maxFreq);
@@ -38,16 +39,28 @@ void FFT::computeLogBuckets() {
         t = std::pow(t, 0.65f);
         float freq = std::pow(10.0f, logMin + t * (logMax - logMin));
         int bin = static_cast<int>(freq / sampleRate * fftSize);
-        bucketBounds[i] = std::clamp(bin, 0, numBins - 1);
+        bucketBounds[i] = std::clamp(bin, 0, numBins);
     }
 
-    // Guarantee strictly increasing bounds so no bucket ends up empty from rounding
+    if (bucketBounds[0] < 1)
+        bucketBounds[0] = 1;
+
     for (int i = 1; i <= numBars; ++i)
     {
         if (bucketBounds[i] <= bucketBounds[i - 1])
             bucketBounds[i] = bucketBounds[i - 1] + 1;
     }
-    bucketBounds[numBars] = std::min(bucketBounds[numBars], numBins - 1);
+
+    if (bucketBounds[numBars] > numBins)
+        bucketBounds[numBars] = numBins;
+
+    for (int i = numBars - 1; i >= 0; --i)
+    {
+        if (bucketBounds[i] >= bucketBounds[i + 1])
+            bucketBounds[i] = bucketBounds[i + 1] - 1;
+        if (bucketBounds[i] < 0)
+            bucketBounds[i] = 0;
+    }
 }
 
 std::vector<float> FFT::process(const std::vector<float>& stereoSamples) {
@@ -89,7 +102,6 @@ std::vector<float> FFT::process(const std::vector<float>& stereoSamples) {
             float mag = std::sqrt(out[bin].r * out[bin].r +
                                   out[bin].i * out[bin].i);
 
-            // Reduce sensitivity to volume changes
             mag = std::log1p(mag);
 
             energy += mag * mag;
@@ -100,17 +112,13 @@ std::vector<float> FFT::process(const std::vector<float>& stereoSamples) {
             ? std::sqrt(energy / count)
             : 0.0f;
 
-
-        // Frequency-based bass attenuation BEFORE normalization
         float centerBin = (startBin + endBin) * 0.5f;
         float freq = centerBin * sampleRate / fftSize;
 
-        // Gentle bass reduction without limiting max bar height
         float bassGain = std::clamp(freq / 180.0f, 0.65f, 1.0f);
 
         avgMag *= bassGain;
 
-        // Overall FFT gain
         avgMag *= 0.03f;
 
 
@@ -122,16 +130,11 @@ std::vector<float> FFT::process(const std::vector<float>& stereoSamples) {
 
         float normalized = (db - MIN_DB) / (MAX_DB - MIN_DB);
 
-        // Compress dynamic range
         normalized = std::pow(normalized, 2.5f);
 
-
-        // Prevent tiny values from flickering
         if (normalized < 0.02f)
             normalized = 0.0f;
 
-
-        // Smoothing
         float& smoothed = smoothedBars[b];
 
         if (normalized < smoothed)
