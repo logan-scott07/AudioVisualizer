@@ -5,8 +5,11 @@
 
 class Window {
 public:
-    bool Create(int width, int height, const char *title);
-    void Destroy() const;
+    Window(int width, int height, const char *title);
+    ~Window();
+
+    Window(const Window&) = delete;
+    Window& operator=(const Window&) = delete;
 
     void SwapBuffers() const;
     void PollEvents() const;
@@ -14,6 +17,7 @@ public:
 
     GLFWwindow* GetGLFWWindow() const;
     HWND GetHWND() const;
+    void BeginCaptionDrag() const;
 
 private:
     GLFWwindow* window = nullptr;

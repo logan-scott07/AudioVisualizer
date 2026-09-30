@@ -18,18 +18,14 @@
 
 
 int main() {
-    Window window;
-
-    if (!window.Create(1200, 600, "AudioVisualizer")) {
-        return -1;
-    }
+    Window window(1200, 600, "AudioVisualizer");
 
     SongSelect song;
     std::unique_ptr<AudioPlayer> player;
     std::optional<ShaderLink> shader;
 
     try {
-        player = make_unique<AudioPlayer>(song.Open());
+        player = std::make_unique<AudioPlayer>(song.Open());
         shader.emplace(ShaderLink::Default());
     } catch (std::exception &e) {
         std::wcout << e.what() << std::endl;
@@ -50,11 +46,10 @@ int main() {
 
     bool leftMouseWasDown = false;
 
-    FFT fft(BUFFER_SIZE, NUM_BARS, SAMPLE_RATE);
+    FFT fft(FFT_SIZE, NUM_BARS, SAMPLE_RATE);
 
     //render loop
     while (!window.ShouldClose()) {
-        glClearColor(0.24f, 0.24f, 0.24f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
         if (player) {
@@ -72,12 +67,11 @@ int main() {
         window.SwapBuffers();
         window.PollEvents();
 
-        GLFWwindow* glfwWindow = window.GetGLFWWindow();
         int fbWidth, fbHeight;
-        glfwGetWindowSize(glfwWindow, &fbWidth, &fbHeight);
+        glfwGetWindowSize(window.GetGLFWWindow(), &fbWidth, &fbHeight);
         double mouseX, mouseY;
-        glfwGetCursorPos(glfwWindow, &mouseX, &mouseY);
-        bool leftMouseIsDown = glfwGetMouseButton(glfwWindow, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS;
+        glfwGetCursorPos(window.GetGLFWWindow(), &mouseX, &mouseY);
+        bool leftMouseIsDown = glfwGetMouseButton(window.GetGLFWWindow(), GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS;
 
         if (leftMouseIsDown && !leftMouseWasDown && fbWidth > 0 && fbHeight > 0) {
             float ndcX = static_cast<float>(mouseX) / static_cast<float>(fbWidth) * 2.0f - 1.0f;
@@ -86,8 +80,6 @@ int main() {
         }
         leftMouseWasDown = leftMouseIsDown;
     }
-
-    window.Destroy();
 
     return 0;
 }
