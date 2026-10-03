@@ -4,7 +4,7 @@
 #include "SongSelect.h"
 
 TitleBar::TitleBar(Window& window, ShaderLink& shader, Cords cords, Color color, AudioPlayer* player)
-    : window(window), shader(shader), textureShader(ShaderLink::Texture()), cords(cords), color(color)
+    : window(window), shader(shader), textureShader(ShaderLink::Texture()), cords(cords), color(color), player(player)
 {
     QuadMesh quad = generateQuad(cords.xMin, cords.yMin, cords.xMax, cords.yMax);
     mesh = std::make_unique<Mesh>(quad.vertices, quad.indices);
@@ -70,6 +70,7 @@ void TitleBar::HandleClick(float x, float y) {
 
     if (x >= cords.xMin && x <= cords.xMax &&
         y >= cords.yMin && y <= cords.yMax) {
+        if (player) player->Pause();
         window.BeginCaptionDrag();
     }
 }

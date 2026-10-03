@@ -11,7 +11,7 @@ class AudioPlayer;
 
 class TitleBar {
 public:
-    explicit TitleBar(Window& window, ShaderLink& shader, Cords cords, Color color, AudioPlayer* player = nullptr);
+    explicit TitleBar(Window& window, ShaderLink& shader, Cords cords, Color color, AudioPlayer* player);
     void Draw() const;
     void HandleClick(float x, float y);
 private:
@@ -23,4 +23,5 @@ private:
     Color color;
     std::unique_ptr<Mesh> mesh;
     std::vector<Button> buttons;
+    AudioPlayer* player = nullptr;
 };
