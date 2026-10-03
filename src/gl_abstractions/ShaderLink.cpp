@@ -24,9 +24,14 @@ ShaderLink::ShaderLink(GLuint vertexShader, GLuint fragmentShader) {
 
         std::cout << "Link failed \n" << infoLog << std::endl;
 
+        glDeleteProgram(id);
         glDeleteShader(vertexShader);
         glDeleteShader(fragmentShader);
+        throw std::runtime_error("Failed to link shader:\n" + infoLog);
     }
+
+    glDeleteShader(vertexShader);
+    glDeleteShader(fragmentShader);
 }
 
 ShaderLink::~ShaderLink() {

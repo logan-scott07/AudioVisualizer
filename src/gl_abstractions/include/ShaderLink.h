@@ -32,6 +32,10 @@ public:
         glUniform4f(glGetUniformLocation(id, name), r, g, b, a);
     }
 
+    void setInt(const char* name, int value) const {
+        glUniform1i(glGetUniformLocation(id, name), value);
+    }
+
 private:
     GLuint id = 0;
 };

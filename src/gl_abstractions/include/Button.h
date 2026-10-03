@@ -18,6 +18,7 @@ public:
     void DrawButton(const ShaderLink& shader) const {
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, texture.id);
+        shader.setInt("uTexture", 0);
         mesh->Draw();
     }
 
