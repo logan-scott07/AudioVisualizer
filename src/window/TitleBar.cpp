@@ -6,7 +6,6 @@
 TitleBar::TitleBar(Window& window, ShaderLink& shader, Cords cords, Color color, AudioPlayer* player)
     : window(window), shader(shader), textureShader(ShaderLink::Texture()), cords(cords), color(color)
 {
-    hwnd = window.GetHWND();
     QuadMesh quad = generateQuad(cords.xMin, cords.yMin, cords.xMax, cords.yMax);
     mesh = std::make_unique<Mesh>(quad.vertices, quad.indices);
 
@@ -50,21 +49,6 @@ TitleBar::TitleBar(Window& window, ShaderLink& shader, Cords cords, Color color,
         }
     );
 
-}
-
-void TitleBar::Initialize() {
-    LONG style = GetWindowLong(hwnd, GWL_STYLE);
-
-    style &= ~WS_CAPTION;
-    style &= ~WS_THICKFRAME;
-
-    SetWindowLong(hwnd, GWL_STYLE, style);
-
-    SetWindowPos(
-        hwnd,nullptr,
-        0,0,
-        0,0,SWP_NOMOVE | SWP_NOSIZE |
-        SWP_NOZORDER | SWP_FRAMECHANGED);
 }
 
 void TitleBar::Draw() const {

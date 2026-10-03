@@ -37,8 +37,6 @@ int main() {
         Color{ .r = 0.15f, .g = 0.15f, .b = 0.2f, .a = 1.0f },
         player.get());
 
-    titleBar.Initialize();
-
     std::vector<float> vertices = generateVertices();
     std::vector<unsigned int> indices = generateIndices();
 
@@ -59,9 +57,9 @@ int main() {
             barMesh.UpdateVertices(vertices);
         }
 
-        shader->use();
         titleBar.Draw();
         shader->use();
+        shader->setVec4("uColor", 0.45f, 0.42f, 0.55f, 1.0f);
         barMesh.Draw();
 
         window.SwapBuffers();
