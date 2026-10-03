@@ -29,8 +29,12 @@ GLuint compile_shader(std::string const& shader_data, GLenum shaderType) {
     glGetShaderiv(shader_id, GL_COMPILE_STATUS, &success);
 
     if (success != GL_TRUE) {
+        GLint logLength = 0;
+        glGetShaderiv(shader_id, GL_INFO_LOG_LENGTH, &logLength);
+        std::string infoLog(logLength, '\0');
+        glGetShaderInfoLog(shader_id, logLength, nullptr, infoLog.data());
         glDeleteShader(shader_id);
-        throw std::runtime_error("Failed to compile shader");
+        throw std::runtime_error("Failed to compile shader:\n" + infoLog);
     }
     return shader_id;
 }
