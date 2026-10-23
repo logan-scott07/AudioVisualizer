@@ -6,9 +6,10 @@ AudioVisualizer is a real-time audio visualization application written in modern
 
 The project captures live audio, performs frequency analysis using Fast Fourier Transform (FFT), and renders the results with a modern OpenGL pipeline. Development has expanded beyond a basic visualizer to include reusable graphics abstractions, texture support, and a foundation for interactive UI elements.
 
-https://github.com/user-attachments/assets/c3ce08ab-dc3c-46b8-a825-7954e1313b5d
 
-<video src="C:\Users\Logan\Downloads\ProjectExample.mp4" width="420" height="340" controls></video>
+https://github.com/user-attachments/assets/a83649c6-0394-47bb-a056-2a3817cf38f0
+
+
 
 ## Technologies
 
