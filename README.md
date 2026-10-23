@@ -103,6 +103,9 @@ The project is currently focused on expanding the rendering framework while impr
 - Additional shader effects
 - Performance optimization
 
+## Update
+As of 10/23/26 you can now install just the .exe from the releases, installing this way may cause windows to prompt user to allow it to run. Its the exact same app as running the source code, just an easier way!
+
 ## Building
 
 > **Note:** Currently Windows-only due to WIN32-specific code (cross-platform support planned).
