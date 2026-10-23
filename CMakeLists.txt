@@ -47,3 +47,6 @@ add_custom_command(TARGET AudioVisualizer POST_BUILD
         $<TARGET_FILE_DIR:AudioVisualizer>/assets
 )
 
+
+set_property(TARGET AudioVisualizer PROPERTY
+        MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
